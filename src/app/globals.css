@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS
+   ───────────────────────────────────────────── */
+@theme {
+  /* Reset Tailwind default palette */
+  --color-*: initial;
+
+  /* ── Surfaces ── */
+  --color-ink: #07070C;
+  --color-ink-deep: #000000;
+  --color-bone: #E6E4ED;
+  --color-bone-soft: #EFEDF3;
+
+  /* ── Brand violet ── */
+  --color-violet: #5C3DFF;
+  --color-violet-bright: #7B5AFF;
+  --color-violet-deep: #3D24CC;
+  --color-violet-muted: rgba(92, 61, 255, 0.12);
+
+  /* ── Text ── */
+  --color-text-on-ink: #F5F4F8;
+  --color-text-on-ink-muted: rgba(245, 244, 248, 0.55);
+  --color-text-on-bone: #0A0A14;
+  --color-text-on-bone-muted: rgba(10, 10, 20, 0.58);
+
+  /* ── Borders ── */
+  --color-border-on-ink: rgba(245, 244, 248, 0.08);
+  --color-border-on-bone: rgba(10, 10, 20, 0.08);
+
+  /* ── Dot grid ── */
+  --color-dot-violet: #5C3DFF;
+  --color-dot-ink: #0A0A14;
+  --color-dot-bone: #E6E4ED;
+
+  /* ── Typography scale ── */
+  --font-size-display-xl: clamp(4rem, 9vw, 8.5rem);
+  --font-size-display-lg: clamp(2.75rem, 5vw, 4.5rem);
+  --font-size-display-md: clamp(2rem, 3.5vw, 3rem);
+  --font-size-body-lg: 1.125rem;
+  --font-size-body: 1rem;
+  --font-size-eyebrow: 0.75rem;
+
+  /* ── Letter spacing ── */
+  --tracking-display: -0.025em;
+  --tracking-eyebrow: 0.18em;
+
+  /* ── Line heights ── */
+  --leading-display: 0.95;
+  --leading-body: 1.5;
+
+  /* ── Spacing ── */
+  --spacing-section: clamp(6rem, 10vw, 10rem);
+  --spacing-section-mobile: 4rem;
+  --container-max: 1280px;
+  --container-padding: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* ── Motion ── */
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* CSS custom props for values Tailwind can't consume directly */
+:root {
+  --font-aeonik: var(--font-aeonik-stack);
+  --font-departure: var(--font-departure-stack);
+  --font-jetbrains: var(--font-jetbrains-stack);
+}
+
+/* ─────────────────────────────────────────────
+   BASE RESETS
+   ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-bone);
+  color: var(--color-text-on-bone);
+  font-family: var(--font-aeonik), 'Space Grotesk', system-ui, sans-serif;
+  line-height: var(--leading-body);
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   TYPOGRAPHY HELPERS
+   ───────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-aeonik), 'Space Grotesk', system-ui, sans-serif;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+}
+
+.font-pixel {
+  font-family: var(--font-departure), 'Departure Mono', 'Courier New', monospace;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains), 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ─────────────────────────────────────────────
+   CONTAINER UTILITY
+   ───────────────────────────────────────────── */
+.container-site {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION RHYTHM
+   ───────────────────────────────────────────── */
+.section-padding {
+  padding-block: var(--spacing-section);
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-block: var(--spacing-section-mobile);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   FOCUS RINGS
+   ───────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────────
+   LINK UNDERLINE ANIMATION
+   ───────────────────────────────────────────── */
+.link-underline {
+  background-image: linear-gradient(var(--color-violet), var(--color-violet));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 250ms ease;
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* ─────────────────────────────────────────────
+   MARQUEE ANIMATION
+   ───────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ─────────────────────────────────────────────
+   ACCESSIBILITY UTILITIES
+   ───────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ─────────────────────────────────────────────
+   REDUCED MOTION
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   WORDMARK STYLES
+   ───────────────────────────────────────────── */
+.wordmark-outline {
+  -webkit-text-stroke: 1px currentColor;
+  color: transparent;
+}
+
+/* ─────────────────────────────────────────────
+   SECTION SURFACE OVERRIDES
+   ───────────────────────────────────────────── */
+.surface-ink {
+  background-color: var(--color-ink);
+  color: var(--color-text-on-ink);
+}
+
+.surface-bone {
+  background-color: var(--color-bone);
+  color: var(--color-text-on-bone);
+}
+
+.surface-black {
+  background-color: var(--color-ink-deep);
+  color: var(--color-text-on-ink);
+}
+
+/* ─────────────────────────────────────────────
+   BUTTON BASE
+   ───────────────────────────────────────────── */
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: var(--font-size-body);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+  white-space: nowrap;
+}
+
+.btn-base:active {
+  transform: scale(0.98);
+}
+
+.btn-base:hover {
+  transform: scale(1.02);
+}
+
+/* ─────────────────────────────────────────────
+   MOBILE RESPONSIVE OVERRIDES
+   ───────────────────────────────────────────── */
+@media (max-width: 480px) {
+  :root {
+    --font-size-display-xl: 2.5rem;
+    --font-size-display-lg: 2rem;
+    --font-size-display-md: 1.5rem;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   SCROLLBAR
+   ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-violet);
+  border-radius: 2px;
+}
