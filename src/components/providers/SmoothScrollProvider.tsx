@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 
 interface SmoothScrollProviderProps {
   children: React.ReactNode
@@ -16,29 +17,34 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
 
     if (prefersReducedMotion) return
 
-    let lenis: import('lenis').default
+    let destroyed = false
+    let rafFn: ((time: number) => void) | null = null
 
     const init = async () => {
       const { default: Lenis } = await import('lenis')
-      lenis = new Lenis({
-        lerp: 0.1,
-        duration: 1.2,
-        smoothWheel: true,
-      })
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
 
+      if (destroyed) return
+
+      const lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true })
       lenisRef.current = lenis
 
-      function raf(time: number) {
-        lenis.raf(time)
-        requestAnimationFrame(raf)
+      lenis.on('scroll', ScrollTrigger.update)
+
+      rafFn = (time: number) => {
+        lenis.raf(time * 1000)
       }
 
-      requestAnimationFrame(raf)
+      gsap.ticker.add(rafFn)
+      gsap.ticker.lagSmoothing(0)
     }
 
     init()
 
     return () => {
+      destroyed = true
+      if (rafFn) gsap.ticker.remove(rafFn)
       lenisRef.current?.destroy()
       lenisRef.current = null
     }

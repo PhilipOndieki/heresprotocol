@@ -2,10 +2,14 @@ import { StatCounter } from '@/components/ui/StatCounter'
 import { DotDivider } from '@/components/ui/DotDivider'
 import { STATS } from '@/lib/constants'
 
-export function StatsBar() {
+interface StatsBarProps {
+  showDivider?: boolean
+}
+
+export function StatsBar({ showDivider = true }: StatsBarProps) {
   return (
     <>
-      <DotDivider surface="ink" height={56} />
+      {showDivider && <DotDivider surface="ink" height={56} />}
       <section
         className="surface-ink section-padding"
         aria-label="Protocol statistics"

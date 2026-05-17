@@ -1,7 +1,5 @@
 import { Header } from '@/components/nav/Header'
-import { Hero } from '@/components/sections/Hero'
-import { StatsBar } from '@/components/sections/StatsBar'
-import { BuiltWith } from '@/components/sections/BuiltWith'
+import { StackedReveal } from '@/components/sections/StackedReveal'
 import { WhyHeres } from '@/components/sections/WhyHeres'
 import { ProductFlow } from '@/components/sections/ProductFlow'
 import { MobileLayer } from '@/components/sections/MobileLayer'
@@ -51,9 +49,7 @@ export default function HomePage() {
       />
       <Header />
       <main id="main-content">
-        <Hero />
-        <StatsBar />
-        <BuiltWith />
+        <StackedReveal />
         <WhyHeres />
         <ProductFlow />
         <MobileLayer />
