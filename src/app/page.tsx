@@ -1,6 +1,6 @@
 import { Header } from '@/components/nav/Header'
 import { StackedReveal } from '@/components/sections/StackedReveal'
-import { WhyHeres } from '@/components/sections/WhyHeres'
+import { WhyHeresReveal } from '@/components/sections/WhyHeresReveal'
 import { ProductFlow } from '@/components/sections/ProductFlow'
 import { MobileLayer } from '@/components/sections/MobileLayer'
 import { UseCases } from '@/components/sections/UseCases'
@@ -50,7 +50,7 @@ export default function HomePage() {
       <Header />
       <main id="main-content">
         <StackedReveal />
-        <WhyHeres />
+        <WhyHeresReveal />
         <ProductFlow />
         <MobileLayer />
         <UseCases />

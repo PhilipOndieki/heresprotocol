@@ -294,3 +294,57 @@ body {
   background: var(--color-violet);
   border-radius: 2px;
 }
+
+/* ─────────────────────────────────────────────
+   WHY HERES REVEAL — PIN STRUCTURE
+   ───────────────────────────────────────────── */
+
+/* Mobile-first: shorter pin distance */
+.why-heres-reveal {
+  height: 180vh;
+}
+
+/* Desktop: full pin distance */
+@media (min-width: 769px) {
+  .why-heres-reveal {
+    height: 220vh;
+  }
+}
+
+/*
+ * Reduced-motion: collapse the pinned reveal into a plain static section.
+ * The JS useEffect bails early, so no ScrollTrigger is ever created.
+ * CSS alone makes the section readable without any animation.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .why-heres-reveal {
+    height: auto !important;
+  }
+
+  .why-heres-reveal-inner {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .why-heres-reveal-box {
+    opacity: 1 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .why-heres-reveal-scrim {
+    display: none !important;
+  }
+
+  /* Cards pre-hidden by JS; CSS overrides to keep them visible */
+  [data-why-card] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
